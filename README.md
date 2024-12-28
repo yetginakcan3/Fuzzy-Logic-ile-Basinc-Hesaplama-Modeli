@@ -1,5 +1,6 @@
 BASINÇ HESAPLAMA MODELİ
 
+
  
 1. Giriş
 Fuzzy Logic (Bulansal Mantık), özellikle doğrusal olmayan ve karmaşık ilişkilerin olduğu durumlarda, geleneksel mantık yöntemlerinin yetersiz kaldığı alanlarda kullanılır. Fiziksel dünya, çoğu zaman belirsizlik ve bulanıklık içerir. Bu tür belirsizliklerin modellenmesi için klasik matematiksel yaklaşımlar yerine fuzzy logic kullanımı yaygınlaşmaktadır. Bu rapor, bir depo içindeki sıcaklık ve hacim parametrelerine dayalı olarak basınç değerini hesaplamak için kullanılan bir fuzzy logic modelinin detaylarını sunmaktadır. Model, BasincHesaplama.fcl dosyasındaki bulanık mantık kurallarına dayanmaktadır. Java programı ise bu modelin uygulama kodlarını içermektedir.
