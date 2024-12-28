@@ -1,0 +1,45 @@
+FUNCTION_BLOCK BasincHesaplama
+
+VAR_INPUT
+    sicaklik : REAL;   // Celsius
+    hacim     : REAL;   // m^3
+END_VAR
+
+VAR_OUTPUT
+    basinc    : REAL;   // MPa
+END_VAR
+
+FUZZIFY sicaklik
+    TERM Dusuk := ( -20, 0) ( 0, 0.1) ( 20, 0.5) ( 40, 1);
+    TERM Orta  := ( 20, 0.1) ( 40, 0.5) ( 60, 1) ( 80, 0.7);
+    TERM Yuksek := ( 60, 0.3) ( 80, 0.7) (100, 1);
+END_FUZZIFY
+
+FUZZIFY hacim
+    TERM Kucuk := ( 0, 0) ( 5, 0.1) ( 10, 0.5) ( 15, 1);
+    TERM Orta  := ( 10, 0.5) ( 20, 0.7) ( 30, 1) ( 40, 0.5);
+    TERM Buyuk := ( 30, 0.5) ( 40, 1) ( 50, 0.7);
+END_FUZZIFY
+
+DEFUZZIFY basinc
+    METHOD : COG;
+    TERM Dusuk  := ( 0, 0) ( 10, 0.2) ( 20, 0.5);
+    TERM Orta   := ( 10, 0.3) ( 20, 0.6) ( 30, 1);
+    TERM Yuksek := ( 20, 0.5) ( 30, 0.7) ( 40, 1);
+END_DEFUZZIFY
+
+RULEBLOCK No1
+    AND : MIN;
+    ACT : MIN;
+    RULE 1 : IF sicaklik IS Dusuk AND hacim IS Kucuk THEN basinc IS Dusuk;
+    RULE 2 : IF sicaklik IS Dusuk AND hacim IS Orta THEN basinc IS Orta;
+    RULE 3 : IF sicaklik IS Dusuk AND hacim IS Buyuk THEN basinc IS Yuksek;
+    RULE 4 : IF sicaklik IS Orta AND hacim IS Kucuk THEN basinc IS Dusuk;
+    RULE 5 : IF sicaklik IS Orta AND hacim IS Orta THEN basinc IS Orta;
+    RULE 6 : IF sicaklik IS Orta AND hacim IS Buyuk THEN basinc IS Yuksek;
+    RULE 7 : IF sicaklik IS Yuksek AND hacim IS Kucuk THEN basinc IS Orta;
+    RULE 8 : IF sicaklik IS Yuksek AND hacim IS Orta THEN basinc IS Yuksek;
+    RULE 9 : IF sicaklik IS Yuksek AND hacim IS Buyuk THEN basinc IS Yuksek;
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK
